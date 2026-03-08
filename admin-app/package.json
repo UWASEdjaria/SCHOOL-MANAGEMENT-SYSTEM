@@ -1,5 +1,6 @@
 {
-  "name": "admin-app",
+  "name": "school-management-admin",
+  "description": "Administrative portal for school management system",
   "version": "0.1.0",
   "private": true,
   "scripts": {
