@@ -42,7 +42,7 @@ export default function Overview() {
               <div key={index} className="flex justify-between items-center py-2 border-b last:border-b-0">
                 <div>
                   <span className="text-gray-800 font-medium">{activity.action}</span>
-                  <p className="text-sm text-gray-600">by {activity.user}</p>
+                <p className="text-gray-500 mt-2">{activity.user}</p>
                 </div>
                 <span className="text-sm text-gray-500">{activity.time}</span>
               </div>

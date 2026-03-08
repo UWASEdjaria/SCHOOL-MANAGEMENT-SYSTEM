@@ -1,1 +1,79 @@
-export default function Notifications() {\n  const notifications = [\n    {\n      id: 1,\n      title: 'Fee Payment Reminder',\n      message: 'Term 3 fees are due in 5 days. Please make payment to avoid late fees.',\n      type: 'warning',\n      date: '2024-01-20',\n      read: false\n    },\n    {\n      id: 2,\n      title: 'Parent-Teacher Meeting',\n      message: 'Scheduled for next Friday at 2:00 PM. Please confirm your attendance.',\n      type: 'info',\n      date: '2024-01-18',\n      read: true\n    },\n    {\n      id: 3,\n      title: 'Grade Report Available',\n      message: 'Term 2 grade report is now available in your dashboard.',\n      type: 'success',\n      date: '2024-01-15',\n      read: true\n    }\n  ];\n\n  const getTypeColor = (type: string) => {\n    switch (type) {\n      case 'warning': return 'border-l-yellow-500 bg-yellow-50';\n      case 'success': return 'border-l-green-500 bg-green-50';\n      case 'info': return 'border-l-blue-500 bg-blue-50';\n      default: return 'border-l-gray-500 bg-gray-50';\n    }\n  };\n\n  return (\n    <div>\n      <h2 className=\"text-2xl font-bold text-gray-900 mb-6\">Notifications</h2>\n      \n      <div className=\"space-y-4\">\n        {notifications.map((notification) => (\n          <div\n            key={notification.id}\n            className={`border-l-4 p-4 rounded-r-lg shadow ${getTypeColor(notification.type)} ${\n              !notification.read ? 'ring-2 ring-blue-200' : ''\n            }`}\n          >\n            <div className=\"flex justify-between items-start\">\n              <div className=\"flex-1\">\n                <div className=\"flex items-center\">\n                  <h3 className=\"text-lg font-semibold text-gray-900\">\n                    {notification.title}\n                  </h3>\n                  {!notification.read && (\n                    <span className=\"ml-2 px-2 py-1 text-xs bg-blue-600 text-white rounded-full\">\n                      New\n                    </span>\n                  )}\n                </div>\n                <p className=\"text-gray-700 mt-2\">{notification.message}</p>\n                <p className=\"text-sm text-gray-500 mt-2\">{notification.date}</p>\n              </div>\n            </div>\n          </div>\n        ))}\n      </div>\n\n      {notifications.length === 0 && (\n        <div className=\"text-center py-12\">\n          <div className=\"text-gray-500 text-lg\">No notifications at this time</div>\n        </div>\n      )}\n    </div>\n  );\n}
+'use client';
+
+export default function Notifications() {
+  const notifications = [
+    {
+      id: 1,
+      title: 'Fee Payment Reminder',
+      message: 'Term 3 fees are due in 5 days. Please make payment to avoid late fees.',
+      type: 'warning',
+      date: '2024-01-20',
+      read: false
+    },
+    {
+      id: 2,
+      title: 'Parent-Teacher Meeting',
+      message: 'Scheduled for next Friday at 2:00 PM. Please confirm your attendance.',
+      type: 'info',
+      date: '2024-01-18',
+      read: true
+    },
+    {
+      id: 3,
+      title: 'Grade Report Available',
+      message: 'Term 2 grade report is now available in your dashboard.',
+      type: 'success',
+      date: '2024-01-15',
+      read: true
+    }
+  ];
+
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case 'warning': return 'border-l-yellow-500 bg-yellow-50';
+      case 'success': return 'border-l-green-500 bg-green-50';
+      case 'info': return 'border-l-blue-500 bg-blue-50';
+      default: return 'border-l-gray-500 bg-gray-50';
+    }
+  };
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Notifications</h2>
+      
+      <div className="space-y-4">
+        {notifications.map((notification) => (
+          <div
+            key={notification.id}
+            className={`border-l-4 p-4 rounded-r-lg shadow ${getTypeColor(notification.type)} ${
+              !notification.read ? 'ring-2 ring-blue-200' : ''
+            }`}
+          >
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <div className="flex items-center">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {notification.title}
+                  </h3>
+                  {!notification.read && (
+                    <span className="ml-2 px-2 py-1 text-xs bg-blue-600 text-white rounded-full">
+                      New
+                    </span>
+                  )}
+                </div>
+                <p className="text-gray-500 mt-2">{notification.message}</p>
+                <p className="text-sm text-gray-500 mt-2">{notification.date}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {notifications.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-500 text-lg">No notifications at this time</div>
+        </div>
+      )}
+    </div>
+  );
+}
