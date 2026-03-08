@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import feeRoutes from './routes/feeRoutes.js';
+import academicRoutes from './routes/academicRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -22,6 +23,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/fees', feeRoutes);
+app.use('/api/academic', academicRoutes);
 
 app.listen(PORT, () => {
   console.log(`Client Backend on port ${PORT}`);

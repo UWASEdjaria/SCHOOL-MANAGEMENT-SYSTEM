@@ -1,6 +1,8 @@
-# School Management System - Client App
+# School Management System - CLIENT APP
 
-Parent/Student application for school management.
+**Parent/Student Application** - This is the client-facing app for parents and students.
+
+> **Note:** The Admin/Staff application is in a separate repository.
 
 ## Structure
 ```
@@ -14,7 +16,8 @@ Parent/Student application for school management.
 ```bash
 cd backend
 npm install
-cp .env.example .env
+copy .env.example .env
+# Edit .env with your MongoDB URI
 npm run dev
 ```
 
@@ -26,7 +29,26 @@ npm run dev
 ```
 
 ## Features
-- Parent/Student registration & login
-- Fee payment & balance tracking
-- View grades, attendance, timetable
-- Device verification
+- ✅ Parent/Student registration & login
+- ✅ SHA-512 password hashing
+- ✅ JWT authentication
+- ✅ Device verification (admin approval required)
+- ✅ Fee payment & balance tracking
+- ✅ View grades & attendance
+- ✅ Transaction history
+
+## API Endpoints
+
+### Auth
+- POST `/api/auth/register` - Register new user
+- POST `/api/auth/login` - Login
+
+### Fees
+- POST `/api/fees/deposit` - Make payment
+- POST `/api/fees/withdraw` - Request refund
+- GET `/api/fees/balance` - Get balance
+- GET `/api/fees/transactions` - Get history
+
+### Academic
+- GET `/api/academic/grades` - Get grades
+- GET `/api/academic/attendance` - Get attendance
