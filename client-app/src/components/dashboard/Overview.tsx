@@ -1,6 +1,6 @@
 export default function Overview() {
   const stats = [
-    { title: 'Total Fees', value: '$2,450', status: 'Due: $450' },
+    { title: 'Total Fees', value: '2,450,000 RWF', status: 'Due: 450,000 RWF' },
     { title: 'Attendance', value: '95%', status: 'This Month' },
     { title: 'Grades', value: 'A-', status: 'Average' }
   ];

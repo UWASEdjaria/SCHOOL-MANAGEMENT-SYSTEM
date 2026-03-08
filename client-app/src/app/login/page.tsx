@@ -22,7 +22,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">Student/Parent Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-500 text-center">Student/Parent Login</h1>
         
         {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
         
@@ -33,7 +33,7 @@ export default function LoginPage() {
               id="email"
               type="email"
               placeholder="Enter your email"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full placeholder-gray-300 px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
               required
@@ -46,7 +46,7 @@ export default function LoginPage() {
               id="password"
               type="password"
               placeholder="Enter your password"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full placeholder-gray-300 px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
               required
@@ -59,7 +59,7 @@ export default function LoginPage() {
         </form>
         
         <p className="mt-4 text-center text-gray-600">
-          Don't have an account? <a href="/register" className="text-blue-600">Register</a>
+          Don&lsquo;t have an account? <a href="/register" className="text-blue-600">Register</a>
         </p>
       </div>
     </div>
