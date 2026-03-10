@@ -1,21 +1,37 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login } from '../../services/authService';
 
 export default function AdminLogin() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
-      console.log('Admin Login:', formData);
+      const data = await login(formData.email, formData.password);
+      
+      // Additional role check for Admin only
+      if (data.user.role !== 'Admin') {
+         setError('Access denied: You do not have administrator privileges.');
+         return;
+      }
+
       router.push('/dashboard');
-    } catch (err) {
-      setError('Login failed');
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+         setError(err.response.data.message);
+      } else {
+         setError('Login failed. Please check your credentials.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,7 +40,7 @@ export default function AdminLogin() {
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
         <h1 className="text-2xl font-bold mb-6 text-gray-500 text-center">Admin Login</h1>
         
-        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
+        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm whitespace-pre-line">{error}</div>}
         
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -53,8 +69,11 @@ export default function AdminLogin() {
             />
           </div>
           
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Login
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={`w-full text-white py-2 rounded ${loading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}>
+            {loading ? 'Authenticating...' : 'Login'}
           </button>
         </form>
         

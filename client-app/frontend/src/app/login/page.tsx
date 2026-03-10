@@ -1,21 +1,38 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login } from '../../services/authService';
 
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
-      console.log('Login:', formData);
+      const data = await login(formData.email, formData.password);
+      
+      // Prevent Admins from logging into the client portal
+      if (data.user.role === 'Admin') {
+         setError('Admins must use the Admin Dashboard.');
+         return;
+      }
+      
       router.push('/dashboard');
-    } catch (err) {
-      setError('Login failed');
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+         setError(err.response.data.message);
+      } else {
+         setError('Login failed. Please check your credentials.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,8 +70,11 @@ export default function LoginPage() {
             />
           </div>
           
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Login
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={`w-full text-white py-2 rounded ${loading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}>
+            {loading ? 'Authenticating...' : 'Login'}
           </button>
         </form>
         

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { depositFee } from '../../services/feeService';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -11,21 +12,36 @@ export default function PaymentPage() {
   });
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     
-    setTimeout(() => {
-      setLoading(false);
-      alert('Payment successful! Receipt sent to your email.');
+    try {
+      const amount = parseFloat(paymentData.amount);
+      if (isNaN(amount) || amount <= 0) {
+        throw new Error("Invalid amount");
+      }
+
+      await depositFee(amount, `Fee Payment for ${paymentData.term} via ${paymentData.paymentMethod}`);
+      
+      alert('Payment successful! Your balance has been updated.');
       router.push('/dashboard');
-    }, 2000);
+    } catch (err: any) {
+      setError(err.response?.data?.message || err.message || 'Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 py-12">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">Fee Payment</h1>
+        
+        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
         
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

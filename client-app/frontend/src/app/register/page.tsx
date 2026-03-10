@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { register } from '../../services/authService';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -12,16 +13,32 @@ export default function RegisterPage() {
   });
   const [error, setError] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
-      console.log('Register:', formData);
-      alert('Registration successful! Wait for admin verification.');
+      await register({
+        firstName: formData.name.split(' ')[0],
+        lastName: formData.name.split(' ').slice(1).join(' ') || formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role.charAt(0).toUpperCase() + formData.role.slice(1) // Capitalize role
+      });
+      
+      alert('Registration successful! Your device must be verified by an administrator before logging in.');
       router.push('/login');
-    } catch (err) {
-      setError('Registration failed');
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+         setError(err.response.data.message);
+      } else {
+         setError('Registration failed. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,8 +103,11 @@ export default function RegisterPage() {
             </select>
           </div>
           
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Register
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={`w-full text-white py-2 rounded ${loading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}>
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
         

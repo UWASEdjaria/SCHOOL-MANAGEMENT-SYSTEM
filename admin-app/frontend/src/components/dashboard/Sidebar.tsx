@@ -10,6 +10,7 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     { id: 'teachers', label: 'Teachers', icon: '👨‍🏫' },
     { id: 'classes', label: 'Classes', icon: '🏫' },
     { id: 'fees', label: 'Fee Management', icon: '💰' },
+    { id: 'devices', label: 'Device Requests', icon: '📱' },
     { id: 'reports', label: 'Reports', icon: '📈' },
     { id: 'settings', label: 'Settings', icon: '⚙️' }
   ];

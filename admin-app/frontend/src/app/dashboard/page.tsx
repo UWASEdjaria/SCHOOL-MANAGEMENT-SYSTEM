@@ -7,6 +7,7 @@ import Students from '@/components/dashboard/Students';
 import Teachers from '@/components/dashboard/Teachers';
 import Classes from '@/components/dashboard/Classes';
 import FeeManagement from '@/components/dashboard/FeeManagement';
+import DeviceVerification from '@/components/dashboard/DeviceVerification';
 import Reports from '@/components/dashboard/Reports';
 import Settings from '@/components/dashboard/Settings';
 
@@ -24,6 +25,7 @@ export default function AdminDashboard() {
           {activeTab === 'teachers' && <Teachers />}
           {activeTab === 'classes' && <Classes />}
           {activeTab === 'fees' && <FeeManagement />}
+          {activeTab === 'devices' && <DeviceVerification />}
           {activeTab === 'reports' && <Reports />}
           {activeTab === 'settings' && <Settings />}
         </main>
