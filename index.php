@@ -185,7 +185,7 @@
 
         <div class="portals">
             <!-- Client Portal -->
-            <a href="http://localhost:3000" class="portal-card">
+            <a href="http://localhost:3000" class="portal-card" target="_blank">
                 <div class="icon">🎓</div>
                 <h2>Student & Parent Portal</h2>
                 <p>Register, login, manage fee payments, and view academic records securely.</p>
@@ -193,7 +193,7 @@
             </a>
 
             <!-- Admin Portal -->
-            <a href="http://localhost:3001" class="portal-card">
+            <a href="http://localhost:3001" class="portal-card" target="_blank">
                 <div class="icon">🔐</div>
                 <h2>Admin & Staff Dashboard</h2>
                 <p>Verify users, manage classes, teachers, and monitor all school activities.</p>
@@ -201,7 +201,17 @@
             </a>
         </div>
 
-        <div style="margin-top: 4rem; color: var(--text-muted); font-size: 0.8rem;">
+        <div style="margin-top: 4rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.5rem; border-radius: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; text-align: left;">
+            <p style="color: #ef4444; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.9rem;">⚠️ Connection Refused?</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                The front-end portals run on <strong>Node.js</strong>. If the buttons above don't work, ensure you have started the servers in your terminal:
+                <br><br>
+                <code><strong>Portal 1:</strong> cd client-app/frontend && npm run dev</code><br>
+                <code><strong>Portal 2:</strong> cd admin-app/frontend && npm run dev</code>
+            </p>
+        </div>
+
+        <div style="margin-top: 2rem; color: var(--text-muted); font-size: 0.8rem;">
             &copy; 2026 Elevanda Ventures. All rights reserved.
         </div>
     </div>
