@@ -9,7 +9,7 @@ header('Content-Type: application/json');
 
 function register($data, $pdo) {
     if (empty($data['username']) || empty($data['password']) || empty($data['role'])) {
-        return ['error' => 'All fields are required'];
+        return ['message' => 'All fields are required'];
     }
 
     $username = $data['username'];
@@ -21,13 +21,13 @@ function register($data, $pdo) {
         $stmt->execute([$username, $password, $role]);
         return ['success' => 'User registered successfully'];
     } catch (PDOException $e) {
-        return ['error' => 'Registration failed: ' . $e->getMessage()];
+        return ['message' => 'Registration failed: ' . $e->getMessage()];
     }
 }
 
 function login($data, $pdo, $jwtSecret) {
     if (empty($data['username']) || empty($data['password'])) {
-        return ['error' => 'Username and password are required'];
+        return ['message' => 'Username and password are required'];
     }
 
     $username = $data['username'];
@@ -39,7 +39,7 @@ function login($data, $pdo, $jwtSecret) {
     $user = $stmt->fetch();
 
     if (!$user) {
-        return ['error' => 'Invalid credentials'];
+        return ['message' => 'Invalid credentials'];
     }
 
     // Device Verification Requirement
@@ -52,14 +52,14 @@ function login($data, $pdo, $jwtSecret) {
             // Register new device as unverified
             $stmt = $pdo->prepare("INSERT INTO devices (user_id, device_id, is_verified) VALUES (?, ?, 0)");
             $stmt->execute([$user['id'], $deviceId]);
-            return ['error' => 'Device pending verification by Admin', 'status' => 'unverified'];
+            return ['message' => 'Device pending verification by Admin', 'status' => 'unverified'];
         }
 
         if (!$device['is_verified']) {
-            return ['error' => 'Device pending verification by Admin', 'status' => 'unverified'];
+            return ['message' => 'Device pending verification by Admin', 'status' => 'unverified'];
         }
     } else {
-         return ['error' => 'Device ID is required for verification'];
+         return ['message' => 'Device ID is required for verification'];
     }
 
     // Generate JWT
