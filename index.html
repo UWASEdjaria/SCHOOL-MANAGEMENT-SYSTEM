@@ -40,32 +40,40 @@
         }
 
         header h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #818cf8, #c084fc);
+            background: linear-gradient(to right, #818cf8, #c084fc, #818cf8);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            margin-bottom: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .portals {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .portal-card {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 2rem;
-            border-radius: 1.5rem;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3.5rem 2.5rem;
+            border-radius: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             color: inherit;
             display: flex;
@@ -74,58 +82,50 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
 
         .portal-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
-        }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .portal-card:hover::before {
-            opacity: 1;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 20px rgba(79, 70, 229, 0.2);
         }
 
         .icon {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
         }
 
         .portal-card h2 {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         .portal-card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .btn {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             background-color: var(--primary);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.85rem 2.5rem;
             border-radius: 9999px;
-            font-weight: 600;
-            transition: background-color 0.2s;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
         }
 
         .portal-card:hover .btn {
             background-color: var(--primary-hover);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
         }
 
         /* Background animation */
@@ -137,34 +137,104 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            pointer-events: none;
         }
 
         .blob {
             position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(79, 70, 229, 0.15);
-            filter: blur(80px);
+            width: 600px;
+            height: 600px;
+            background: rgba(79, 70, 229, 0.1);
+            filter: blur(100px);
             border-radius: 50%;
-            animation: move 20s infinite alternate;
+            animation: move 25s infinite alternate ease-in-out;
         }
 
         .blob-2 {
-            background: rgba(192, 132, 252, 0.15);
-            right: -100px;
-            top: -100px;
-            animation-duration: 25s;
+            background: rgba(192, 132, 252, 0.1);
+            right: -150px;
+            top: -150px;
+            animation-duration: 30s;
         }
 
         @keyframes move {
-            from { transform: translate(0, 0); }
-            to { transform: translate(100px, 100px); }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(150px, 150px) rotate(15deg); }
+        }
+
+        /* Config Tool */
+        #config-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        #config-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(45deg);
+        }
+
+        #config-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 2rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-content h3 { margin-bottom: 2rem; text-align: center; }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .input-group input { 
+            width: 100%; 
+            background: var(--bg); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            padding: 1rem; 
+            border-radius: 0.8rem; 
+            color: white; 
+            font-size: 0.9rem;
+        }
+
+        .save-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
         }
 
         @media (max-width: 768px) {
-            .portals {
-                grid-template-columns: 1fr;
-            }
+            .portals { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -176,42 +246,86 @@
 
     <div class="container">
         <header>
-            <h1>School Management System</h1>
+            <h1>Elevanda ventures School</h1>
             <p>Empowering Education Through Technology</p>
         </header>
 
         <div class="portals">
-            <!-- Client Portal -->
-            <a href="https://your-student-portal.vercel.app" class="portal-card" target="_blank" id="student-portal-link">
+            <!-- Student Portal -->
+            <a href="http://localhost:3000" class="portal-card" id="student-portal-link">
                 <div class="icon">🎓</div>
-                <h2>Student & Parent Portal</h2>
+                <h2>Student & Parent</h2>
                 <p>Register, login, manage fee payments, and view academic records securely.</p>
                 <div class="btn">Access Portal</div>
             </a>
 
             <!-- Admin Portal -->
-            <a href="https://your-admin-portal.vercel.app" class="portal-card" target="_blank" id="admin-portal-link">
+            <a href="http://localhost:3001" class="portal-card" id="admin-portal-link">
                 <div class="icon">🔐</div>
-                <h2>Admin & Staff Dashboard</h2>
+                <h2>Admin & Staff</h2>
                 <p>Verify users, manage classes, teachers, and monitor all school activities.</p>
-                <div class="btn">Login as Admin</div>
+                <div class="btn">Manage School</div>
             </a>
         </div>
 
-        <div style="margin-top: 3rem; background: rgba(79, 70, 229, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 1rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-                <strong>Deployment Note:</strong> Since you have deployed to Vercel, please ensure you update the links above in your <code>index.html</code> to point to your actual Vercel project URLs.
-            </p>
+        <div style="margin-top: 4rem; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; opacity: 0.5;">
+            &copy; 2026 Elevanda Ventures. All rights reserved.
         </div>
+    </div>
 
-        <div style="margin-top: 2rem; color: var(--text-muted); font-size: 0.8rem;">
-            &amp;copy; 2026 Elevanda Ventures. All rights reserved.
+    <!-- Configuration Tool for the User -->
+    <div id="config-btn" title="Configure Portal Links">⚙️</div>
+
+    <div id="config-modal">
+        <div class="modal-content">
+            <h3>🔗 Portal Configuration</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem; text-align: center;">Paste your live Vercel links below to connect the buttons instantly.</p>
+            <div class="input-group">
+                <label>Student Portal URL</label>
+                <input type="text" id="student-url" placeholder="https://your-student-app.vercel.app">
+            </div>
+            <div class="input-group">
+                <label>Admin Portal URL</label>
+                <input type="text" id="admin-url" placeholder="https://your-admin-app.vercel.app">
+            </div>
+            <button class="save-btn" onclick="saveLinks()">Save & Connect</button>
+            <button style="width: 100%; background: none; border: none; color: #ef4444; margin-top: 1rem; cursor: pointer; font-size: 0.8rem;" onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <script>
-        // Optional: Simple script to handle environment detection or help the user
-        console.log("School Management Landing Page Ready.");
+        function openModal() { document.getElementById('config-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('config-modal').style.display = 'none'; }
+        
+        document.getElementById('config-btn').onclick = openModal;
+
+        function saveLinks() {
+            const sUrl = document.getElementById('student-url').value;
+            const aUrl = document.getElementById('admin-url').value;
+            
+            if(sUrl) localStorage.setItem('student-link', sUrl);
+            if(aUrl) localStorage.setItem('admin-link', aUrl);
+            
+            applyLinks();
+            closeModal();
+            alert("Links connected! Your buttons are now live.");
+        }
+
+        function applyLinks() {
+            const sUrl = localStorage.getItem('student-link');
+            const aUrl = localStorage.getItem('admin-link');
+            
+            if(sUrl) document.getElementById('student-portal-link').href = sUrl;
+            if(aUrl) document.getElementById('admin-portal-link').href = aUrl;
+        }
+
+        // Apply saved links on load
+        window.onload = function() {
+            // Load saved values into inputs
+            document.getElementById('student-url').value = localStorage.getItem('student-link') || "";
+            document.getElementById('admin-url').value = localStorage.getItem('admin-link') || "";
+            applyLinks();
+        };
     </script>
 </body>
 </html>
