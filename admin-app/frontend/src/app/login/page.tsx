@@ -17,7 +17,6 @@ export default function AdminLogin() {
     try {
       const data = await login(formData.username, formData.password);
       
-      // Additional role check for Admin only
       if (data.user.role !== 'Admin') {
          setError('Access denied: You do not have administrator privileges.');
          return;
@@ -36,50 +35,66 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-gray-500 text-center">Admin Login</h1>
-        
-        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm whitespace-pre-line">{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 mb-2">Username</label>
+    <div className="min-h-screen flex items-center justify-center bg-[#0f172a] text-[#f8fafc] font-sans">
+      {/* Background Blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] height-[500px] bg-[#4f46e5]/10 blur-[80px] rounded-full"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] height-[500px] bg-[#c084fc]/10 blur-[80px] rounded-full"></div>
+      </div>
+
+      <div className="bg-[#1e293b] p-8 rounded-2xl border border-white/10 shadow-2xl w-96 relative z-10">
+        <header className="text-center mb-8">
+          <div className="text-4xl mb-3">🔐</div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#818cf8] to-[#c084fc] bg-clip-text text-transparent mb-2">Admin Dashboard</h1>
+          <p className="text-[#94a3b8] text-sm">Secure administrative access only.</p>
+        </header>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg mb-6 text-sm whitespace-pre-line">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-[#94a3b8] mb-1.5 ml-1">Admin Username</label>
             <input
-              id="username"
               type="text"
-              placeholder="Enter admin username"
-              className="w-full placeholder-gray-300 px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="e.g. admin_01"
+              className="w-full bg-[#0f172a] border border-white/10 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/50 focus:border-[#4f46e5] transition-all text-white placeholder-white/20"
               value={formData.username}
               onChange={(e) => setFormData({...formData, username: e.target.value})}
               required
             />
           </div>
-          
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
+
+          <div>
+            <label className="block text-sm font-medium text-[#94a3b8] mb-1.5 ml-1">Admin Password</label>
             <input
-              id="password"
               type="password"
-              placeholder="Enter admin password"
-              className="w-full placeholder-gray-300 px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="••••••••"
+              className="w-full bg-[#0f172a] border border-white/10 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/50 focus:border-[#4f46e5] transition-all text-white placeholder-white/20"
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
               required
             />
           </div>
-          
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             disabled={loading}
-            className={`w-full text-white py-2 rounded ${loading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}>
-            {loading ? 'Authenticating...' : 'Login'}
+            className="w-full bg-gradient-to-r from-[#818cf8] to-[#6366f1] hover:from-[#6366f1] hover:to-[#4f46e5] text-white font-semibold py-3 rounded-xl shadow-lg shadow-indigo-500/20 transition-all transform active:scale-[0.98] disabled:opacity-50"
+          >
+            {loading ? 'Verifying Credentials...' : 'Secure Login'}
           </button>
         </form>
-        
-        <p className="mt-4 text-center text-gray-600">
-          <a href="/" className="text-blue-600">← Back to Home</a>
-        </p>
+
+        <div className="mt-8 text-center space-y-3">
+          <hr className="border-white/5" />
+          <a href="http://localhost/school-management-system/" className="text-xs text-[#94a3b8] hover:text-[#f8fafc] flex items-center justify-center gap-1 transition-colors">
+            ← Back to Main Home
+          </a>
+        </div>
       </div>
     </div>
   );
